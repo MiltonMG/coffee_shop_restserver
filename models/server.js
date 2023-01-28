@@ -1,5 +1,6 @@
 const express = require('express');
 var cors = require('cors');
+const { dbConnection } = require('../database/configDB.js');
 
 class Server {
     
@@ -7,12 +8,19 @@ class Server {
         //propiedades de nuestra clase
         this.app = express();
         this.port = process.env.PORT;
-        this.usuarioPath = '/api/usuarios'
+        this.usuarioPath = '/api/usuarios';
+
+        //conectar a BD
+        this.conectarDB();
 
         //Middlewares
         this.middlewares();
         //llamamos al metodo rutas para inicializarlas
         this.routes();
+    }
+
+    async conectarDB() {
+        await dbConnection();
     }
 
     middlewares(){
@@ -31,6 +39,8 @@ class Server {
     }
 
     routes() {
+        // el primer argumento representa el path principal
+        //el segundo argumento son las otras opciones que tendra el path principal
         this.app.use(this.usuarioPath, require('../routes/usuarios.routes.js'))
     }
 
