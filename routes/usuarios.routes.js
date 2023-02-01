@@ -5,6 +5,7 @@ const {check} = require('express-validator');
 const { usuariosGet, usuariosPut, usuariosPost, usuariosDelete, usuariosPatch } = require('../controllers/usuarios.controllers');
 const { esRoleValido, emailExiste, existeUsuarioPorId } = require('../helpers/db-validators');
 
+//una forma de hacer las importaciones mas limpias, esto gracias al index.js que esta en la carpeta middlewares 
 const {
     validarCampos, validarJWT, tieneRole, esAdminRole
 } = require('../middlewares')
