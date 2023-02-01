@@ -97,7 +97,7 @@ const usuariosPatch = (req, res) => {
 
 const usuariosDelete = async (req, res) => {
 
-    const { id } = req.params
+    const { id } = req.params //ennviamos el id como parametro en la url
     
     //Borrando: FISICAMENTE - ELIMINANDO TODO SU CONTENIDO DE LA BASE DE DATOS
     /* 
@@ -107,9 +107,8 @@ const usuariosDelete = async (req, res) => {
     //Borrando: CAMBIANDO ESTADO DE LA BASE DE DATOS
     const usuario = await Usuario.findByIdAndUpdate(id, {status: false});
 
-    
 
-    res.json(usuario);
+    res.json({usuario});
 }
 
 

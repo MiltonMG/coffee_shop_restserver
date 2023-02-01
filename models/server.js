@@ -9,6 +9,7 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
         this.usuarioPath = '/api/usuarios';
+        this.authPath = '/api/auth';
 
         //conectar a BD
         this.conectarDB();
@@ -42,6 +43,9 @@ class Server {
         // el primer argumento representa el path principal
         //el segundo argumento son las otras opciones que tendra el path principal
         this.app.use(this.usuarioPath, require('../routes/usuarios.routes.js'))
+
+
+        this.app.use(this.authPath, require('../routes/auth.routes.js'))
     }
 
     liste(){ 

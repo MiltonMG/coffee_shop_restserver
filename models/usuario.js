@@ -45,9 +45,15 @@ const usuarioSchema = Schema({
     },
 });
 
+
+//sobrescribimos el metodos toJSON para quitar ciertos datos que no queremos enviar al 
+//realizar peticion al endpoint, esto se envia donde se llama res.json(), esto esta en los controladores de las rutas
 usuarioSchema.methods.toJSON = function() {
 
-    const { __v, password, ...usuario } = this.toObject();
+    //desestructuramos lo que viene en toObject() [Aca viene la data del endpoint]
+    const { __v, password, _id, ...usuario } = this.toObject();
+
+    usuario.uid = _id //en Mongo el id se muestra como _id, nosotros lo agregamos como uid
     return usuario;
 }
 
@@ -55,6 +61,7 @@ usuarioSchema.methods.toJSON = function() {
 // que coloquemos en el primer argumento de metodo model
 // se agrega en singular por que mongo se encarga de agregarle una S
 //ejemplo, usuario -> usuarios 
+//entonces nosotros le indicamos q queremos llamar al modelo como Usuario y no como Usuarios
 module.exports = model( 'Usuario', usuarioSchema );
 
 
