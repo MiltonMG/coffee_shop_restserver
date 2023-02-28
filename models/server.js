@@ -8,8 +8,14 @@ class Server {
         //propiedades de nuestra clase
         this.app = express();
         this.port = process.env.PORT;
-        this.usuarioPath = '/api/usuarios';
-        this.authPath = '/api/auth';
+
+        this.paths = {
+            auth: '/api/auth',
+            usuario: '/api/usuarios',
+            productos: '/api/productos',
+            categorias: '/api/categorias',
+            buscar: '/api/buscar',
+        }
 
         //conectar a BD
         this.conectarDB();
@@ -42,10 +48,18 @@ class Server {
     routes() {
         // el primer argumento representa el path principal
         //el segundo argumento son las otras opciones que tendra el path principal
-        this.app.use(this.usuarioPath, require('../routes/usuarios.routes.js'))
+        this.app.use(this.paths.usuario, require('../routes/usuarios.routes.js'))
 
 
-        this.app.use(this.authPath, require('../routes/auth.routes.js'))
+        this.app.use(this.paths.auth, require('../routes/auth.routes.js'))
+
+
+        this.app.use(this.paths.categorias, require('../routes/categorias.routes.js'))
+        
+        this.app.use(this.paths.productos, require('../routes/productos.routes.js'))
+        
+        this.app.use(this.paths.buscar, require('../routes/buscar.routes.js'))
+
     }
 
     liste(){ 
